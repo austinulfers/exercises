@@ -31,18 +31,27 @@ mut_vehicles <- mutate(vehicles, average = (hwy + cty)/2)
 # Filter the whole vehicles data set for 2-Wheel Drive vehicles that get more
 # than 20 miles/gallon in the city. 
 # Save this new data frame in a variable.
-
+fuel_efficient <- mut_vehicles %>% 
+  filter(cty > 20)
 
 # Of the above vehicles, what is the vehicle ID of the vehicle with the worst 
 # hwy mpg?
 # Hint: filter for the worst vehicle, then select its ID.
-
+worst_mpg_id <- fuel_efficient %>% 
+  filter(hwy == min(hwy)) %>% 
+  select(id)
 
 # Write a function that takes a `year_choice` and a `make_choice` as parameters,
 # and returns the vehicle model that gets the most hwy miles/gallon of vehicles 
 # of that make in that year.
 # You'll need to filter more (and do some selecting)!
-
+best_car <- function(year_choice, make_choice) {
+  mut_vehicles %>% 
+    filter(year == year_choice) %>% 
+    filter(make == make_choice) %>% 
+    filter(hwy == max(hwy)) %>% 
+    select(model)
+}
 
 # What was the most efficient Honda model of 1995?
-
+best_car(1995, "Honda")

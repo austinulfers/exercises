@@ -2,37 +2,39 @@
 
 # Load the httr and jsonlite libraries for accessing data
 # You can also load `dplyr` if you wish to use it
-
+library(httr)
+library(jsonlite)
+library(dplyr)
 
 # Create a variable for the API's base URI (https://api.github.com)
-
+base.uri <- "https://api.github.com"
 
 # Under the "Repositories" category, find the endpoint that will list repos in 
 # an organization
 # Create a variable `resource` that represents the endpoint for the book
 # organization (you can use `paste0()` to construct this, or enter it manually)
-
+resource <- "/orgs/info201/repos"
 
 # Send a GET request to this endpoint (the base.uri followed by the resource)
 # and extract the response body
-
+response <- GET(paste0(base.uri, resource))
 
 # Convert the body from JSON into a data frame
-
-
+response_content <- content(response, "text")
+body_data <- fromJSON(response_content)
 # How many (public) repositories does the organization have?
-
+sum(body_data$private)
 
 
 # Use a "Search" endpoint to search for repositories about "visualization" whose
 # language includes "R"
 # Reassign the `resource` variable to refer to the appropriate resource.
-
+resource <- "/v3/search/#search-repositories"
 
 # You will need to specify some query parameters. Create a `query_params` list 
 # variable that specifies an appropriate key and value for the search term and
 # the language
-
+query_params <- 
 
 # Send a GET request to this endpoint--including your params list as the `query`.
 # Extract the response body and convert it from JSON.
